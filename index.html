@@ -57,71 +57,10 @@
           <article class="bug reveal"><span>ERR_04</span><p>Ошибался в параметрах</p><b>invalid_payload</b></article>
         </div>
       </div>
-
-      <div class="story-path reveal" aria-label="Путь от проблемы к решению">
-        <article class="path-node path-error">
-          <i class="error-signal" aria-hidden="true"></i>
-          <span>ПРОБЛЕМА</span>
-          <strong>Агент выбирает не то действие</strong>
-        </article>
-        <div class="path-connector" aria-hidden="true"><i></i></div>
-        <article class="path-node path-inspect">
-          <span>ПОИСК ПРИЧИНЫ</span>
-          <strong>Логи показывают неверный маршрут</strong>
-        </article>
-        <div class="path-connector" aria-hidden="true"><i></i></div>
-        <article class="path-node path-solved">
-          <span>РЕШЕНИЕ</span>
-          <strong>Функции выстроены в рабочую цепочку</strong>
-        </article>
-      </div>
-    </section>
-
-    <section class="section math-lab" id="math-lab">
-      <div class="section-label reveal">02 / МАТЕМАТИКА БЕЗ ФАНТАЗИИ</div>
-      <div class="math-head reveal">
-        <h2>Агент умеет понимать и объяснять. Считать лучше функции.</h2>
-        <p class="big-copy">Пока модель пыталась быть калькулятором, один лишний ноль чувствовал себя прекрасно.</p>
-      </div>
-
-      <div class="math-case reveal" id="math-case">
-        <div class="math-error-panel">
-          <p class="math-status error"><i class="error-signal" aria-hidden="true"></i> ERROR / MODEL_MATH</p>
-          <p class="math-prompt">Запрос: «Посчитай 10% от 175 000 ₽»</p>
-          <div class="bad-math" aria-label="Ошибочный расчёт: 175 тысяч рублей превратились в 1 миллион 750 тысяч рублей">
-            <span>175 000 ₽</span><b>→</b><strong>1 750 000 ₽</strong>
-          </div>
-          <p class="math-error-note">Ноль прибавился уверенно. И совершенно зря.</p>
-        </div>
-
-        <div class="math-switch">
-          <button type="button" id="math-toggle" aria-expanded="false">
-            Показать правильный маршрут <span>→</span>
-          </button>
-        </div>
-
-        <div class="math-solution-panel" id="math-solution" aria-hidden="true">
-          <p class="math-status success"><i aria-hidden="true"></i> ARCHITECTURE / VERIFIED</p>
-          <div class="solution-steps">
-            <article class="solution-step">
-              <span>01</span><strong>ИИ понимает запрос</strong>
-            </article>
-            <div class="solution-arrow" aria-hidden="true">↓</div>
-            <article class="solution-step">
-              <span>02</span><strong>Функция считает</strong>
-            </article>
-            <div class="solution-arrow" aria-hidden="true">↓</div>
-            <article class="solution-step">
-              <span>03</span><strong>Агент объясняет результат</strong>
-            </article>
-          </div>
-          <p class="verified-result"><span>17 500 ₽</span> — рассчитано функцией</p>
-        </div>
-      </div>
     </section>
 
     <section class="section demo" id="demo">
-      <div class="section-label reveal">03 / МИНИ-ДЕМО</div>
+      <div class="section-label reveal">02 / МИНИ-ДЕМО</div>
       <div class="demo-grid">
         <div class="reveal">
           <h2>Теперь можно говорить по-человечески</h2>
@@ -130,6 +69,7 @@
             <button class="demo-chip active" data-action="add">Добавить расход</button>
             <button class="demo-chip" data-action="find">Найти запись</button>
             <button class="demo-chip" data-action="edit">Исправить без ID</button>
+            <button class="demo-chip" data-action="calc">Проверить расчёт</button>
           </div>
         </div>
 
@@ -142,7 +82,7 @@
     </section>
 
     <section class="section work">
-      <div class="section-label reveal">04 / ЧТО ВХОДИТ В СОЗДАНИЕ</div>
+      <div class="section-label reveal">03 / ЧТО ВХОДИТ В СОЗДАНИЕ</div>
       <h2 class="wide-title reveal">Главная работа начинается после фразы «ну, вроде подключилось»</h2>
       <div class="pipeline">
         <article class="step reveal"><span>01</span><div><h3>Логика задачи</h3><p>Разобрать, что агент должен понимать, искать и менять.</p></div></article>
@@ -154,7 +94,7 @@
     </section>
 
     <section class="section result">
-      <div class="section-label reveal">05 / РЕЗУЛЬТАТ</div>
+      <div class="section-label reveal">04 / РЕЗУЛЬТАТ</div>
       <div class="result-card reveal">
         <div>
           <p class="eyebrow">STATUS: WORKS_AS_INTENDED</p>
@@ -171,7 +111,7 @@
     </section>
 
     <section class="section cases">
-      <div class="section-label reveal">06 / ДЛЯ КАКИХ ЗАДАЧ</div>
+      <div class="section-label reveal">05 / ДЛЯ КАКИХ ЗАДАЧ</div>
       <div class="cases-head reveal">
         <h2>Агента можно собрать не только для семейного бюджета</h2>
         <p>Если в работе есть повторяющиеся запросы, данные и понятные действия — там уже можно искать задачу для агента.</p>
@@ -206,7 +146,7 @@
       <p>Одним-двумя предложениями. Этого достаточно для первого разговора.</p>
       <textarea id="task-text" rows="5" placeholder="Например: хочу агента, который принимает заявки клиентов, заносит данные в таблицу и помогает быстро находить нужную запись."></textarea>
       <button class="copy-btn" id="copy-btn">Скопировать текст для сообщения</button>
-      <a class="max-btn" href="https://max.ru/u/f9LHodD0cOLN1TTqwNBvT6p-1S5RXPD62b8AJYMaA5I0U-bPlrs-Zdszx7Q" target="_blank" rel="noopener">Написать Светлане в MAX <span>↗</span></a>
+      <a class="max-btn" href="https://max.ru/u/f9LHodD0cOLN1TTqwNBvT6p-1S5RXPD62b8AJYMaA5I0U-bPlrs-Zdszx7Q" target="_blank" rel="noopener">Написать мне в MAX <span>↗</span></a>
       <small>Скопируйте текст и отправьте мне его в MAX.</small>
     </section>
   </div>
