@@ -2,136 +2,275 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#070914">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c10">
   <meta name="description" content="Интерактивный кейс Светланы Изотовой о создании семейного финансового AI-агента.">
   <title>Агент, который сначала требовал ID — кейс Светланы Изотовой</title>
-  <link rel="stylesheet" href="styles.css?v=20260912">
+  <link rel="stylesheet" href="styles.css?v=20260912-2">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="В начало"><span class="brand-dot"></span>ИЗОТОВА / AI-МАСТЕРСКАЯ</a>
-    <button class="ghost-btn js-open-modal">Обсудить агента <span>↗</span></button>
+    <a class="brand" href="#top"><span></span> ИЗОТОВА / AI-МАСТЕРСКАЯ</a>
+    <button class="top-cta js-open-modal">Обсудить задачу <b>↗</b></button>
   </header>
 
   <main id="top">
     <section class="hero section">
       <div class="hero-copy reveal">
-        <p class="eyebrow"><span>CASE_01</span> AI-АГЕНТ + GOOGLE ТАБЛИЦЫ</p>
-        <h1>Агент, который сначала <em>требовал ID</em></h1>
-        <p class="lead">Я создала семейного финансового AI-агента. Он принимает расходы, ищет записи и редактирует их — даже если человек не знает никакого ID.</p>
-        <div class="hero-actions">
-          <a class="primary-btn" href="#demo">Посмотреть, как работает <span>↓</span></a>
-          <span class="status"><i></i> AGENT ONLINE</span>
-        </div>
+        <p class="kicker cyan">CASE_01 · AI-АГЕНТ + GOOGLE ТАБЛИЦЫ</p>
+        <h1>Агент, который сначала <span>требовал ID</span></h1>
+        <p class="hero-lead"><strong>История о том, почему создать AI-агента — это не просто написать хороший промпт.</strong></p>
+        <p class="hero-thought">Агент может красиво отвечать.<br><b>Но ценность появляется тогда, когда он действительно выполняет работу.</b></p>
+        <a class="primary-btn" href="#architecture">Посмотреть, что было дальше <span>↓</span></a>
       </div>
 
-      <div class="terminal reveal" aria-label="Терминал агента">
-        <div class="terminal-head"><span></span><span></span><span></span><b>agent_debug.log</b></div>
-        <div class="terminal-body">
-          <p><small>09:41:02</small> <b class="pink">USER</b> Исправь продукты вчера на 1862 ₽</p>
-          <p><small>09:41:03</small> <b class="yellow">AGENT</b> Укажите ID записи</p>
-          <p><small>09:41:04</small> <b class="pink">USER</b> Какой ещё ID?..</p>
-          <p class="separator">────────────────────────</p>
-          <p><small>after_debug</small> <b class="cyan">FLOW</b> search → find ID → edit</p>
-          <p><small>09:58:17</small> <b class="green">AGENT</b> Готово. Сумма изменена на 1862 ₽</p>
-          <p class="caret">_<span></span></p>
+      <div class="hero-chat reveal" aria-label="Первый диалог с агентом">
+        <div class="window-bar"><i></i><i></i><i></i><span>first_run.chat</span></div>
+        <div class="hero-chat-body">
+          <div class="chat-message user-msg">Исправь вчерашнюю покупку. Я указала не ту категорию.</div>
+          <div class="chat-message agent-msg error-msg">Укажите <strong>ID</strong> записи.</div>
+          <p class="human-note">Человек не обязан помнить номер строки в Google Таблице.</p>
+          <div class="reboot-line"><span></span><b>logic_updated</b></div>
+          <div class="chat-message agent-msg success-msg">Я нашёл подходящую запись. Хотите изменить категорию?</div>
+          <div class="case-stamp">Это семейный финансовый AI-агент.<br><strong>И нет, он заработал не с первого промпта.</strong></div>
         </div>
       </div>
     </section>
 
-    <section class="section problem">
-      <div class="section-label reveal">01 / ПРОБЛЕМА</div>
-      <div class="split">
-        <div class="reveal">
-          <h2>«Подключить функцию» — ещё не значит создать агента</h2>
-          <p class="big-copy">На первой попытке он был очень деловым. Особенно когда перекладывал свою работу на пользователя.</p>
-        </div>
-        <div class="bug-list">
-          <article class="bug reveal"><span>ERR_01</span><p>Выбирал не те функции</p><b>function_mismatch</b></article>
-          <article class="bug reveal"><span>ERR_02</span><p>Спрашивал ID вместо самостоятельного поиска</p><b>human_as_database</b></article>
-          <article class="bug reveal"><span>ERR_03</span><p>Путал поиск и редактирование</p><b>wrong_action</b></article>
-          <article class="bug reveal"><span>ERR_04</span><p>Ошибался в параметрах</p><b>invalid_payload</b></article>
+    <section class="section architecture" id="architecture">
+      <header class="center-head reveal">
+        <p class="kicker cyan">01 · БОТ И АГЕНТ — НЕ ОДНО И ТО ЖЕ</p>
+        <h2>Бот — это только окно общения</h2>
+        <p>Вы можете писать агенту там, где вам удобно: в Telegram, MAX, на сайте или в другом привычном канале.</p>
+      </header>
+
+      <div class="system-map reveal" aria-label="Бот, агент и системы с данными">
+        <article class="system-card">
+          <p class="tech-label">ГДЕ ВЫ ПИШЕТЕ</p>
+          <div class="tag-row"><span>Telegram</span><span>MAX</span><span>Сайт</span></div>
+          <h3>Бот принимает сообщение</h3>
+        </article>
+        <div class="map-arrow"><b>→</b><small>сообщение</small></div>
+        <article class="system-card brain-card">
+          <p class="tech-label">ГДЕ ПРИНИМАЕТСЯ РЕШЕНИЕ</p>
+          <div class="ai-orbit"><span>AI</span></div>
+          <h3>Агент понимает задачу</h3>
+          <p>Решает, что найти, уточнить или изменить</p>
+        </article>
+        <div class="map-arrow"><b>→</b><small>действие</small></div>
+        <article class="system-card">
+          <p class="tech-label">ГДЕ РАБОТАЮТ ДАННЫЕ</p>
+          <div class="tag-row"><span>Таблица</span><span>CRM</span><span>Документы</span></div>
+          <h3>Система выполняет работу</h3>
+        </article>
+      </div>
+
+      <blockquote class="key-quote green-quote reveal">
+        <span>Мессенджер — место, где вы разговариваете с агентом.</span>
+        <strong>Сам агент — система, которая понимает задачу и выполняет работу.</strong>
+      </blockquote>
+    </section>
+
+    <section class="section problem" id="problem">
+      <div class="section-intro reveal">
+        <p class="kicker red">02 · ПЕРВЫЙ ЗАПУСК</p>
+        <h2>Казалось бы, что тут сложного?</h2>
+        <div class="intro-copy">
+          <p>Расходы хранятся в Google Таблице. Но человеку не хочется каждый раз открывать её, искать нужную строку и вручную менять данные.</p>
+          <p>Он просто пишет агенту в привычном месте — например, в Telegram или MAX: <strong>«Исправь вчерашнюю покупку. Я указала не ту категорию».</strong></p>
+          <p>Агент должен понять задачу, найти запись, проверить её, выполнить изменение и сообщить результат.</p>
+          <p><strong>Звучит просто.</strong> Но между «понял сообщение» и «сделал правильно» оказалось много нюансов.</p>
+          <p><strong>Но у агента были собственные планы.</strong></p>
         </div>
       </div>
+
+      <div class="problem-grid">
+        <div class="error-accordion reveal" data-accordion>
+          <article class="error-item open">
+            <button aria-expanded="true"><span><small>ERR_01</small><b>Сделал не то действие</b></span><i>×</i></button>
+            <div class="accordion-body"><p>Агент понял сообщение, но выбрал неправильный следующий шаг.</p></div>
+          </article>
+          <article class="error-item">
+            <button aria-expanded="false"><span><small>ERR_02</small><b>Искал вместо того, чтобы исправить</b></span><i>+</i></button>
+            <div class="accordion-body"><p>Он находил нужную запись, но не доводил задачу до изменения данных.</p></div>
+          </article>
+          <article class="error-item">
+            <button aria-expanded="false"><span><small>ERR_03</small><b>«Назовите ID»</b></span><i>+</i></button>
+            <div class="accordion-body"><p>Хотя человек не обязан знать внутренний номер строки в таблице.</p></div>
+          </article>
+          <article class="error-item">
+            <button aria-expanded="false"><span><small>ERR_04</small><b>Передавал не те данные</b></span><i>+</i></button>
+            <div class="accordion-body"><p>Действие вроде выбрано правильно, а результат всё равно получался неверным.</p></div>
+          </article>
+          <article class="error-item">
+            <button aria-expanded="false"><span><small>ERR_05</small><b>Уверенно писал «Готово»</b></span><i>+</i></button>
+            <div class="accordion-body"><p>Хотя итог ещё нужно было проверить.</p></div>
+          </article>
+        </div>
+
+        <aside class="diagnostics reveal">
+          <p class="tech-label">SYSTEM_DIAGNOSTICS</p>
+          <div class="confidence-ring"><b>100%</b></div>
+          <h3>Уверенность агента</h3>
+          <p>Верность действия: требует проверки</p>
+          <div class="diagnostic-status"><span></span> ЛОГИКА НЕ ПОДТВЕРЖДЕНА</div>
+        </aside>
+      </div>
+
+      <blockquote class="key-quote red-quote reveal">
+        <span>AI-агент уже существовал.</span>
+        <strong>Рабочего помощника ещё не было.</strong>
+      </blockquote>
     </section>
 
     <section class="section demo" id="demo">
-      <div class="section-label reveal">02 / МИНИ-ДЕМО</div>
-      <div class="demo-grid">
-        <div class="reveal">
-          <h2>Теперь можно говорить по-человечески</h2>
-          <p class="big-copy">Нажмите на задачу и посмотрите, какую цепочку запускает агент.</p>
-          <div class="demo-controls" role="group" aria-label="Выберите задачу">
-            <button class="demo-chip active" data-action="add">Добавить расход</button>
-            <button class="demo-chip" data-action="find">Найти запись</button>
-            <button class="demo-chip" data-action="edit">Исправить без ID</button>
-            <button class="demo-chip" data-action="calc">Проверить расчёт</button>
-          </div>
-        </div>
+      <header class="center-head reveal">
+        <p class="kicker cyan">03 · ПРОВЕРЬТЕ САМИ</p>
+        <h2>Попробуйте, как это работает</h2>
+        <p><strong>Человек просто пишет задачу обычными словами.</strong> Агент сам разбирается, что нужно найти, уточнить и изменить.</p>
+      </header>
 
-        <div class="phone reveal">
-          <div class="phone-top"><span>Семейный бюджет</span><i></i></div>
-          <div class="chat" id="chat" aria-live="polite"></div>
-          <div class="flow" id="flow"></div>
+      <div class="demo-shell reveal">
+        <div class="demo-tabs" role="tablist" aria-label="Сценарии работы агента">
+          <button class="demo-tab active" role="tab" aria-selected="true" data-demo="add">Добавить расход</button>
+          <button class="demo-tab" role="tab" aria-selected="false" data-demo="find">Найти запись</button>
+          <button class="demo-tab" role="tab" aria-selected="false" data-demo="edit">Исправить покупку <small>ГЛАВНОЕ</small></button>
+          <button class="demo-tab" role="tab" aria-selected="false" data-demo="multi">Если найдено несколько</button>
+          <button class="demo-tab" role="tab" aria-selected="false" data-demo="calc">Проверить расчёт</button>
         </div>
-      </div>
-    </section>
-
-    <section class="section work">
-      <div class="section-label reveal">03 / ЧТО ВХОДИТ В СОЗДАНИЕ</div>
-      <h2 class="wide-title reveal">Главная работа начинается после фразы «ну, вроде подключилось»</h2>
-      <div class="pipeline">
-        <article class="step reveal"><span>01</span><div><h3>Логика задачи</h3><p>Разобрать, что агент должен понимать, искать и менять.</p></div></article>
-        <article class="step reveal"><span>02</span><div><h3>Функции и данные</h3><p>Подключить нужные действия и точно передать параметры.</p></div></article>
-        <article class="step reveal"><span>03</span><div><h3>Тестовые диалоги</h3><p>Проверить нормальные запросы, странные формулировки и человеческое «ну вот это исправь».</p></div></article>
-        <article class="step reveal"><span>04</span><div><h3>Логи и отладка</h3><p>Увидеть, где агент свернул не туда, и поправить маршрут.</p></div></article>
-        <article class="step reveal"><span>05</span><div><h3>Повторная проверка</h3><p>Убедиться, что исправление одной ошибки не родило две новые. Такое они умеют.</p></div></article>
-      </div>
-    </section>
-
-    <section class="section result">
-      <div class="section-label reveal">04 / РЕЗУЛЬТАТ</div>
-      <div class="result-card reveal">
-        <div>
-          <p class="eyebrow">STATUS: WORKS_AS_INTENDED</p>
-          <h2>Агент перестал изображать справочную и начал делать работу</h2>
-        </div>
-        <div class="check-grid">
-          <p><span>✓</span> Принимает расходы</p>
-          <p><span>✓</span> Ищет нужные записи</p>
-          <p><span>✓</span> Редактирует данные</p>
-          <p><span>✓</span> Сам находит ID</p>
+        <div class="demo-stage">
+          <div class="demo-dialog" id="demo-dialog" aria-live="polite"></div>
+          <aside class="sheet-panel" id="sheet-panel" aria-live="polite"></aside>
         </div>
       </div>
-      <p class="result-note reveal">Не магия. Продуманная логика, тесты, логи и несколько разговоров с системой в духе: «Почему ты опять пошёл не туда?»</p>
+
+      <div class="demo-points reveal">
+        <span>Человек не искал строку.</span>
+        <span>Не открывал список функций.</span>
+        <span>Не вспоминал ID.</span>
+      </div>
+      <blockquote class="demo-summary reveal">
+        <span>Мессенджер принял сообщение.</span>
+        <span>Агент понял задачу.</span>
+        <strong>Система нашла данные и выполнила действие.</strong>
+      </blockquote>
     </section>
 
-    <section class="section cases">
-      <div class="section-label reveal">05 / ДЛЯ КАКИХ ЗАДАЧ</div>
-      <div class="cases-head reveal">
-        <h2>Агента можно собрать не только для семейного бюджета</h2>
-        <p>Если в работе есть повторяющиеся запросы, данные и понятные действия — там уже можно искать задачу для агента.</p>
+    <section class="section invisible-work" id="work">
+      <div class="section-intro reveal">
+        <p class="kicker violet">04 · НЕВИДИМАЯ РАБОТА</p>
+        <h2>Между запросом и «Готово»</h2>
+        <p>За одной короткой фразой скрывается цепочка решений. Нажимайте на этапы — система пройдёт путь вместе с вами.</p>
       </div>
-      <div class="case-grid">
-        <article class="case-card reveal"><span>01</span><h3>Работа с таблицами</h3><p>Добавление, поиск, изменение и сверка записей.</p></article>
-        <article class="case-card reveal"><span>02</span><h3>Клиентские запросы</h3><p>Сбор вводных, ответы и передача сложных случаев человеку.</p></article>
-        <article class="case-card reveal"><span>03</span><h3>Контент и база знаний</h3><p>Поиск материалов, черновики и работа по вашим правилам.</p></article>
-        <article class="case-card reveal"><span>04</span><h3>Внутренние процессы</h3><p>Заявки, отчёты, напоминания и маршрутизация задач.</p></article>
-        <article class="case-card reveal"><span>05</span><h3>Персональные помощники</h3><p>Учёт, планирование и обработка повседневных данных.</p></article>
-        <article class="case-card accent reveal"><span>YOUR_CASE</span><h3>Ваша задача</h3><p>Сначала разберём, нужен ли здесь агент и что он должен делать.</p></article>
+
+      <div class="path-grid reveal">
+        <div class="path-steps" role="list" aria-label="Путь обработки запроса">
+          <button class="path-step active" data-step="0"><small>01</small><span>Понять, что нужно сделать</span></button>
+          <button class="path-step" data-step="1"><small>02</small><span>Проверить информацию</span></button>
+          <button class="path-step" data-step="2"><small>03</small><span>Найти данные</span></button>
+          <button class="path-step" data-step="3"><small>04</small><span>Уточнить при совпадениях</span></button>
+          <button class="path-step" data-step="4"><small>05</small><span>Выполнить</span></button>
+          <button class="path-step" data-step="5"><small>06</small><span>Проверить результат</span></button>
+        </div>
+        <div class="path-console">
+          <div class="window-bar"><i></i><i></i><i></i><span>agent_path</span></div>
+          <div class="console-lines" id="console-lines" aria-live="polite"></div>
+          <button class="replay-btn" id="replay-path">Пройти ещё раз ↻</button>
+        </div>
       </div>
+
+      <div class="work-grid reveal">
+        <article><small>01</small><h3>Что агент должен понять</h3><p>Что именно хочет человек.</p></article>
+        <article><small>02</small><h3>Какие действия ему доступны</h3><p>Что он умеет искать, добавлять, менять или передавать дальше.</p></article>
+        <article><small>03</small><h3>Что делать по шагам</h3><p>В каком порядке выполнять действия.</p></article>
+        <article><small>04</small><h3>Как вести себя в живых запросах</h3><p>Что делать с неточными фразами, неполными данными и похожими вариантами.</p></article>
+        <article><small>05</small><h3>Где искать ошибки</h3><p>Что проверять, если агент делает не то.</p></article>
+        <article><small>06</small><h3>Как понять, что всё работает</h3><p>Не только получить красивый ответ, но и проверить выполненное действие.</p></article>
+      </div>
+
+      <blockquote class="key-quote violet-quote reveal">
+        <span>Вот за эту невидимую часть работы и платит клиент.</span>
+        <strong>Не за «волшебный промпт», а за рабочую систему.</strong>
+      </blockquote>
     </section>
 
-    <section class="section cta reveal">
-      <div class="cta-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
-      <p class="eyebrow">READY_TO_BUILD?</p>
-      <h2>Есть задача, которую хочется передать AI-агенту?</h2>
-      <p>Опишите её одним-двумя предложениями. Этого достаточно для первого разговора.</p>
-      <button class="primary-btn large js-open-modal">Обсудить моего агента <span>↗</span></button>
+    <section class="section result" id="result">
+      <header class="center-head reveal">
+        <p class="kicker green">05 · СИСТЕМА РАБОТАЕТ</p>
+        <h2>В итоге агент научился</h2>
+      </header>
+      <div class="result-grid">
+        <ul class="result-list reveal">
+          <li>Записывать расходы в Google Таблицу</li>
+          <li>Находить нужные записи</li>
+          <li>Показывать найденную информацию</li>
+          <li>Менять существующие записи</li>
+          <li>Самому находить запись перед изменением</li>
+          <li>Уточнять запрос, если найдено несколько похожих вариантов</li>
+        </ul>
+        <div class="compare reveal">
+          <div class="compare-tabs" role="tablist"><button class="active" data-compare="before">Было</button><button data-compare="after">Стало</button></div>
+          <div class="compare-list" id="compare-list" aria-live="polite"></div>
+        </div>
+      </div>
+      <blockquote class="key-quote green-quote result-quote reveal">
+        <span>Человек говорит, что нужно сделать.</span>
+        <strong>Агент выполняет работу с данными.</strong>
+      </blockquote>
+    </section>
+
+    <section class="section tasks" id="tasks">
+      <div class="section-intro reveal">
+        <p class="kicker cyan">06 · ВАША ЗАДАЧА</p>
+        <h2>Что вам надоело делать вручную?</h2>
+        <p>Если одна и та же задача повторяется снова и снова, возможно, её можно передать агенту.</p>
+      </div>
+      <div class="task-accordion reveal" data-accordion>
+        <article class="task-item open">
+          <button aria-expanded="true"><span class="task-icon">⌗</span><b>Данные и таблицы</b><i>×</i></button>
+          <div class="accordion-body"><p>Записывать расходы, искать записи, менять статусы, исправлять данные и собирать информацию.</p><small>Расходы · заказы · статусы · записи</small></div>
+        </article>
+        <article class="task-item">
+          <button aria-expanded="false"><span class="task-icon">◎</span><b>Клиенты и заявки</b><i>+</i></button>
+          <div class="accordion-body"><p>Принимать обращения, задавать уточняющие вопросы, собирать данные клиента и обновлять статус.</p></div>
+        </article>
+        <article class="task-item">
+          <button aria-expanded="false"><span class="task-icon">✦</span><b>Контент и материалы</b><i>+</i></button>
+          <div class="accordion-body"><p>Искать информацию в своих материалах, помогать с черновиками, идеями и базой контента.</p></div>
+        </article>
+        <article class="task-item">
+          <button aria-expanded="false"><span class="task-icon">⌘</span><b>Внутренний помощник</b><i>+</i></button>
+          <div class="accordion-body"><p>Отвечать по инструкциям, искать документы и работать с базой знаний.</p></div>
+        </article>
+        <article class="task-item wide">
+          <button aria-expanded="false"><span class="task-icon">◇</span><b>Диагностика и анкеты</b><i>+</i></button>
+          <div class="accordion-body"><p>Задавать вопросы, анализировать ответы, формировать персональный результат и передавать итог дальше.</p></div>
+        </article>
+      </div>
+      <blockquote class="tasks-final reveal">
+        <span>AI-агент начинается не с платформы.</span>
+        <strong>Он начинается с задачи, которую вам надоело выполнять вручную.</strong>
+        <small>А где вы будете с ним общаться — в Telegram, MAX, на сайте или в другом месте — это уже вопрос удобства.</small>
+      </blockquote>
+    </section>
+
+    <section class="section cta reveal" id="contact">
+      <p class="kicker cyan">07 · МОЖНО НАЧАТЬ С ОДНОЙ ФРАЗЫ</p>
+      <h2>Возможно, вам тоже нужен не очередной бот</h2>
+      <p class="cta-lead">А помощник, который понимает вашу задачу, работает с нужными данными и не заставляет человека разбираться в таблицах, строках и идентификаторах.</p>
+      <div class="cta-services">
+        <span>разбираюсь в задаче</span><span>проектирую логику</span><span>подключаю сервисы</span><span>тестирую сценарии</span><span>нахожу ошибки</span><span>довожу до результата</span>
+      </div>
+      <h3>Расскажите, какую повторяющуюся задачу вы хотите передать агенту.</h3>
+      <div class="cta-actions">
+        <button class="primary-btn js-open-modal">Обсудить мою задачу <span>↗</span></button>
+        <button class="secondary-btn js-open-modal">Посмотреть, нужен ли мне агент</button>
+      </div>
+      <div class="message-example"><small>МОЖНО НАПИСАТЬ ТАК:</small><p>«Я каждый день вручную переношу заявки в таблицу. Можно это передать агенту?»</p></div>
+      <p class="no-empire">Без обещания построить цифровую империю за один вечер.</p>
     </section>
   </main>
 
@@ -141,16 +280,16 @@
     <div class="modal-backdrop js-close-modal"></div>
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <button class="modal-close js-close-modal" aria-label="Закрыть">×</button>
-      <p class="eyebrow">START_A_CONVERSATION</p>
+      <p class="kicker cyan">START_A_CONVERSATION</p>
       <h2 id="modal-title">Опишите задачу</h2>
       <p>Одним-двумя предложениями. Этого достаточно для первого разговора.</p>
-      <textarea id="task-text" rows="5" placeholder="Например: хочу агента, который принимает заявки клиентов, заносит данные в таблицу и помогает быстро находить нужную запись."></textarea>
+      <textarea id="task-text" rows="5" placeholder="Например: я каждый день вручную переношу заявки в таблицу. Можно это передать агенту?"></textarea>
       <button class="copy-btn" id="copy-btn">Скопировать текст для сообщения</button>
       <a class="max-btn" href="https://max.ru/u/f9LHodD0cOLN1TTqwNBvT6p-1S5RXPD62b8AJYMaA5I0U-bPlrs-Zdszx7Q" target="_blank" rel="noopener">Написать мне в MAX <span>↗</span></a>
       <small>Скопируйте текст и отправьте мне его в MAX.</small>
     </section>
   </div>
 
-  <script src="script.js?v=20260912"></script>
+  <script src="script.js?v=20260912-2"></script>
 </body>
 </html>
