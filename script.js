@@ -1,7 +1,8 @@
 const demos={
   add:{messages:[["user","Запиши: продукты, сегодня, 2450 рублей"],["agent","Готово. Добавил расход: продукты — 2450 ₽."]],flow:"INPUT → VALIDATE → ADD_ROW → DONE"},
   find:{messages:[["user","Покажи расходы на продукты за эту неделю"],["agent","Нашёл 4 записи. Общая сумма — 6 874 ₽."]],flow:"INPUT → PARSE_PERIOD → SEARCH_ROWS → SUMMARIZE"},
-  edit:{messages:[["user","Вчерашние продукты исправь на 1862 рубля"],["agent","Нашёл нужную запись и изменил сумму: 2450 ₽ → 1862 ₽."]],flow:"INPUT → SEARCH_ROW → GET_ID → EDIT_ROW → DONE"}
+  edit:{messages:[["user","Вчерашние продукты исправь на 1862 рубля"],["agent","Нашёл нужную запись и изменил сумму: 2450 ₽ → 1862 ₽."]],flow:"INPUT → SEARCH_ROW → GET_ID → EDIT_ROW → DONE"},
+  calc:{messages:[["user","Проверь расчёт: 10% от 175 000 ₽"],["agent calc-error","175 000 ₽ → 1 750 000 ₽"],["agent","Функция пересчитала: 17 500 ₽."]],flow:"ИИ понимает запрос → функция считает → агент формулирует ответ.",note:"Точные расчёты лучше отдавать функциям, а ИИ — понимание запроса и объяснение результата."}
 };
 const chat=document.querySelector("#chat");
 const flow=document.querySelector("#flow");
@@ -15,7 +16,13 @@ function renderDemo(key){
     el.textContent=text;
     chat.appendChild(el);
   });
-  window.setTimeout(()=>{flow.textContent=data.flow},500);
+  window.setTimeout(()=>{
+    if(data.note){
+      flow.innerHTML=`<div class="calc-flow"><div class="calc-route">${data.flow}</div><div class="calc-note">${data.note}</div></div>`;
+    }else{
+      flow.textContent=data.flow;
+    }
+  },500);
 }
 document.querySelectorAll(".demo-chip").forEach(btn=>btn.addEventListener("click",()=>{
   document.querySelectorAll(".demo-chip").forEach(item=>item.classList.remove("active"));
@@ -56,41 +63,6 @@ copyBtn.addEventListener("click",async()=>{
   }
   window.setTimeout(()=>copyBtn.textContent="Скопировать текст для сообщения",1800);
 });
-
-// Stagger only related groups so the story unfolds without constant motion.
-document.querySelectorAll(".bug-list, .pipeline, .case-grid").forEach(group=>{
-  group.querySelectorAll(".reveal").forEach((el,index)=>{
-    el.style.setProperty("--delay",Math.min(index*70,280)+"ms");
-  });
-});
-
-const mathCase=document.querySelector("#math-case");
-const mathToggle=document.querySelector("#math-toggle");
-const mathSolution=document.querySelector("#math-solution");
-let mathTimers=[];
-function clearMathTimers(){
-  mathTimers.forEach(timer=>window.clearTimeout(timer));
-  mathTimers=[];
-}
-if(mathCase&&mathToggle&&mathSolution){
-  mathToggle.addEventListener("click",()=>{
-    const solved=!mathCase.classList.contains("solved");
-    clearMathTimers();
-    mathCase.classList.toggle("solved",solved);
-    mathToggle.setAttribute("aria-expanded",String(solved));
-    mathSolution.setAttribute("aria-hidden",String(!solved));
-    mathToggle.innerHTML=solved
-      ? 'Вернуть ошибочный расчёт <span>↶</span>'
-      : 'Показать правильный маршрут <span>→</span>';
-    const steps=mathCase.querySelectorAll(".solution-step");
-    steps.forEach(step=>step.classList.remove("active"));
-    if(solved){
-      steps.forEach((step,index)=>{
-        mathTimers.push(window.setTimeout(()=>step.classList.add("active"),280+index*330));
-      });
-    }
-  });
-}
 
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}});
