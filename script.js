@@ -57,6 +57,41 @@ copyBtn.addEventListener("click",async()=>{
   window.setTimeout(()=>copyBtn.textContent="Скопировать текст для сообщения",1800);
 });
 
+// Stagger only related groups so the story unfolds without constant motion.
+document.querySelectorAll(".bug-list, .pipeline, .case-grid").forEach(group=>{
+  group.querySelectorAll(".reveal").forEach((el,index)=>{
+    el.style.setProperty("--delay",Math.min(index*70,280)+"ms");
+  });
+});
+
+const mathCase=document.querySelector("#math-case");
+const mathToggle=document.querySelector("#math-toggle");
+const mathSolution=document.querySelector("#math-solution");
+let mathTimers=[];
+function clearMathTimers(){
+  mathTimers.forEach(timer=>window.clearTimeout(timer));
+  mathTimers=[];
+}
+if(mathCase&&mathToggle&&mathSolution){
+  mathToggle.addEventListener("click",()=>{
+    const solved=!mathCase.classList.contains("solved");
+    clearMathTimers();
+    mathCase.classList.toggle("solved",solved);
+    mathToggle.setAttribute("aria-expanded",String(solved));
+    mathSolution.setAttribute("aria-hidden",String(!solved));
+    mathToggle.innerHTML=solved
+      ? 'Вернуть ошибочный расчёт <span>↶</span>'
+      : 'Показать правильный маршрут <span>→</span>';
+    const steps=mathCase.querySelectorAll(".solution-step");
+    steps.forEach(step=>step.classList.remove("active"));
+    if(solved){
+      steps.forEach((step,index)=>{
+        mathTimers.push(window.setTimeout(()=>step.classList.add("active"),280+index*330));
+      });
+    }
+  });
+}
+
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}});
 },{threshold:.13});
